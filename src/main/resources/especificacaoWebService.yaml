@@ -1,0 +1,227 @@
+
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+
+
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: User
+  - name: Movie
+paths:
+  '/api/movies/allocate/{id}':
+    put:
+      tags:
+        - Movie
+      summary: aloca filme da locadora
+      operationId: allocateMovieUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id do filme que deseja alocar
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Movie'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/MovieError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/movies/find/available':
+    get:
+      tags:
+        - Movie
+      summary: busca filmes disponiveis
+      operationId: findAvailableMoviesUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Movie'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/movies/find/title/{title}':
+    get:
+      tags:
+        - Movie
+      summary: procura pelo titulo do filme passado
+      operationId: findByTitleUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: title
+          in: path
+          description: titulo do filme
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Movie'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/movies/return/{id}':
+    put:
+      tags:
+        - Movie
+      summary: retorna filme indicado pelo id
+      operationId: returnMovieUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id do filme a ser retornado
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/api/users/create':
+    post:
+      tags:
+        - User
+      summary: cria usuario
+      operationId: createUserUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: user
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  
+definitions:
+  MovieError:
+    type: object
+    properties:
+      status:
+        type: integer
+        example: 400
+      timestamp: 
+        type: string
+        example: 14/09/2020 22:30:57
+      message:
+        type: string
+        example: There's no movie with the id given!
+  Movie:
+    type: object
+    properties:
+      director:
+        type: string
+        example: Tarantino
+      id:
+        type: integer
+        format: int64
+        example: 1
+      title:
+        type: string
+        example: Kill Bill
+      user:
+        $ref: '#/definitions/User'
+  UserResponse:
+    type: object
+    properties:
+      email:
+        type: string
+        example: august@yahoo.com
+      name:
+        type: string
+        example: Augusto
+      password:
+        type: string
+        example: $2a$10$a0B9CzCSkoMkKqxCbhspKeD0azXGd6tot2Op.kwWnv/UyFTpEKc6S
+      userType:
+        type: string
+        example: USER
+        enum:
+          - USER
+          - ADMIN     
+      movies:
+        type: string
+        example: null
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+        example: august@yahoo.com
+      name:
+        type: string
+        example: Augusto
+      password:
+        type: string
+        example: 123
+      userType:
+        type: string
+        example: USER
+        enum:
+          - USER
+          - ADMIN
+  

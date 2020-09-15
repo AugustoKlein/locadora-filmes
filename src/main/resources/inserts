@@ -1,0 +1,7 @@
+INSERT INTO movie (id,title,director) values (1,'Kill Bill','Quentin Tarantino');
+INSERT INTO movie (id,title,director) values (2,'Kill Bill','Quentin Tarantino');
+INSERT INTO movie (id,title,director) values (3,'Taxi Driver','Martin Scorsese');
+INSERT INTO movie (id,title,director) values (4,'Scott Pilgrim','Edgar Wright');
+
+INSERT INTO movie (id,email,name,password,user_type) 
+values (1,'augusto@teste.com','Admin','$2a$10$ln0eIQVc03rnv8Z1WC2odev23zUlpAPQD0v1cY3LaktpxaAPqO9Ky',ADMIN);
